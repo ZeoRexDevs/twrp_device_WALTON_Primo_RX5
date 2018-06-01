@@ -6,6 +6,7 @@ addons:
 services:
   - docker
 before_install:
+  - df -lhT && sudo cat /proc/cpuinfo && sudo cat /proc/meminfo
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
 - cd $HOME && mkdir twrp
@@ -25,9 +26,6 @@ after_success:
   - export version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
   - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img
   - cd $HOME/twrp/ && wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"/
-before_deploy:
-  # Set up git tag this commit
-  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 deploy:
   skip_cleanup: true
   provider: releases
