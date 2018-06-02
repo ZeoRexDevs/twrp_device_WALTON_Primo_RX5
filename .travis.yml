@@ -6,7 +6,6 @@ addons:
 services:
   - docker
 before_install:
-  - df -lhT && sudo cat /proc/cpuinfo && sudo cat /proc/meminfo
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
 - cd $HOME && mkdir twrp
@@ -36,6 +35,9 @@ deploy:
     tags: false
     repo: ZeoRexDevs/twrp_device_WALTON_Primo_RX5
     branch: master
+branches:
+  except:
+  - /^(?i:untagged)-.*$/
 notifications:
   email:
   - rokibhasansagar2014@outlook.com
